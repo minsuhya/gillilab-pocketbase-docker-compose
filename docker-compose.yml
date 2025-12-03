@@ -1,0 +1,24 @@
+---
+services:
+  pocketbase:
+    # Dockerfile path
+    image: pocketbase/pocketbase
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pocketbase
+    restart: unless-stopped
+    ports:
+      - "8090:8080"  # Accessible only via localhost
+    volumes:
+      - ./pb_data:/pb/pb_data
+      - ./pb_public:/pb/pb_public
+      - ./pb_migrations:/pb/pb_migrations
+      - ./pb_hooks:/pb/pb_hooks
+    # command: ["serve", "--http=0.0.0.0:8080", "--dir=/pb/pb_data"]
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "1"
+
